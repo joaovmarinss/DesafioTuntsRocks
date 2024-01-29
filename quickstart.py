@@ -1,5 +1,5 @@
 import os.path
-
+import approval
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -7,11 +7,11 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = "1vG55EpIkt45ZKNneCpFEbVVNWAxwOubAuqQqC4SfgHM"
-SAMPLE_RANGE_NAME = "engenharia_de_software"
+SAMPLE_RANGE_NAME = "engenharia_de_software!A4:H27"
 
 
 def main():
@@ -47,16 +47,25 @@ def main():
         .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
         .execute()
     )
-    values = result.get("values", [])
+    values = result['values']
+    for students in values:
+        presencesbooleam, presences = approval.situation_pres(int(students[2]) )
+        if(presencesbooleam):
+            situation = approval.situation(approval.avarege_calc(int(students[3]),int(students[4]),int(students[5])))
+            students.append(situation)
+            
+            if(situation == "Exame Final"):
+                students.append(approval.notefinal_calc(int(approval.avarege_calc(int(students[3]),int(students[4]),int(students[5]))))) 
+                print(approval.avarege_calc(int(students[3]),int(students[4]),int(students[5])))
+                print(students)
+            else: 
+               students.append("0")  
+              
+        else:
+          students.append(presences)
+          students.append("0")
+      
 
-    if not values:
-      print("No data found.")
-      return
-
-    print("Name, Major:")
-    for row in values:
-      # Print columns A and E, which correspond to indices 0 and 4.
-      print(f"{row[0]}, {row[4]}")
   except HttpError as err:
     print(err)
 
