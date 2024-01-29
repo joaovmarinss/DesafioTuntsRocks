@@ -55,16 +55,14 @@ def main():
             students.append(situation)
             
             if(situation == "Exame Final"):
-                students.append(approval.notefinal_calc(int(approval.avarege_calc(int(students[3]),int(students[4]),int(students[5]))))) 
-                print(approval.avarege_calc(int(students[3]),int(students[4]),int(students[5])))
-                print(students)
+                students.append(str(approval.notefinal_calc(int(approval.avarege_calc(int(students[3]),int(students[4]),int(students[5])))))) 
             else: 
                students.append("0")  
               
         else:
           students.append(presences)
           students.append("0")
-      
+    print(values)  
 
   except HttpError as err:
     print(err)
