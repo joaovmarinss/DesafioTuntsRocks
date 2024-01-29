@@ -1,25 +1,28 @@
-import quickstart
 import math
-def main():
-    
-    
-
-    main()
-
 def avarege_calc(noteP1,noteP2,noteP3):
     return (noteP1 + noteP2 + noteP3)/3
 
 def notefinal_calc(avarage):
-    finalnote = 0
-    for i in range(11):
-        if 5 <= (avarage + i)/2:
-            finalnote = i   
+    for i in range(1,101):
+        if 50 >= (avarage + i)/2:
+           return i
+              
+
 
 def situation(avarage):
-    if avarage <5: return "Reprovado por Nota"
-    elif 5<= avarage < 7: 
+    if avarage < 50 : return "Reprovado por Nota"
+    elif 50<= avarage < 70: 
         notefinal_calc(avarage)
         return "Exame Final" 
     else : return "Aprovado"
 
-    
+def presence(fouls):
+    if (((60 - fouls)/60)*100 < 75):
+        return True
+
+def situation_pres(fouls):
+    if(presence(fouls)):
+        return False , "Reprovado por Falta"
+    else : 
+        return True, "x"
+
