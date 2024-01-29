@@ -62,7 +62,8 @@ def main():
         else:
           students.append(presences)
           students.append("0")
-    print(values)  
+    body = {"values":values}
+    result =  (sheet.values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME, valueInputOption = "USER_ENTERED",body=body).execute())
 
   except HttpError as err:
     print(err)
