@@ -4,8 +4,9 @@ def avarege_calc(noteP1,noteP2,noteP3):
 
 def notefinal_calc(avarage):
     for i in range(1,101):
-        if 50 >= (avarage + i)/2:
-           return i
+        if ((i+avarage)/2) >= 50:
+            return i
+            break
               
 
 
